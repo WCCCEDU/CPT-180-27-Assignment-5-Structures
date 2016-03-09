@@ -7,7 +7,7 @@ In our Reader Library you consumed your config file into an array and returned i
 The same is true of your Config File Generator it could take advantage of many structures. Your config file could be read into a `struct` but also some things like `timezone` could be stored in an `enum` so you can easily validate data the user provides.
 
 ##### Here is what you will build:
-###### A better config reader and generator
+###### A better Config Reader and Config Generator
 
 1. You will refactor your `ConfigReader` Library to return a `struct` pointer instead of an string* (string pointer)
   - Your struct should match the fields in your file
@@ -28,4 +28,4 @@ The same is true of your Config File Generator it could take advantage of many s
 2. You will refactor your `Config File Generator` to take advantage of your Config reader library
   - It will rely on the `ConfigReader` to read a file path you define as a const in your Generator
   - When performing `Init` and `Edit` operations your Generator should employ the same struct as your `ConfigReader` for keeping track of your data.
-  - Utilize the `ConfigReader`'s new writer function to save your file to the file system after init or edit. 
+  - Utilize the `ConfigReader`'s new writer function to save your file to the file system after init or edit.
