@@ -29,3 +29,7 @@ The same is true of your Config File Generator it could take advantage of many s
   - It will rely on the `ConfigReader` to read a file path you define as a const in your Generator
   - When performing `Init` and `Edit` operations your Generator should employ the same struct as your `ConfigReader` for keeping track of your data.
   - Utilize the `ConfigReader`'s new writer function to save your file to the file system after init or edit.
+3. Organize your project files
+  - Put your `ConfigGenerator` project in the `config_generator` folder of this project
+  - Put your `ConfigReader` library project in the `config_reader_lib` folder
+  - Push and open PR
