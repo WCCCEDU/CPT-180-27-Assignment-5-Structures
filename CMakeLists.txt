@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.3)
+project(Config_Generator2)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES main.cpp config.h configreader.cpp)
+add_executable(Config_Generator2 ${SOURCE_FILES})
