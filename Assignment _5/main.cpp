@@ -6,10 +6,25 @@
 const std::string CONFIG = "C:/Users/Tim/ClionProjects/Assignment_2_File_Generator/config.txt";
 const std::string EDIT = "C:/Users/Tim/ClionProjects/Assignment_2_File_Generator/edit.txt";
 
+void init();
+void edit();
+
+
 int main(int argc, char *argv[]) {
 
+    if (static_cast<std::string>(argv[1]) == "init"){
+        init();
 
-    if (static_cast<std::string>(argv[1]) == "init") {
+    }
+
+    else if (static_cast<std::string>(argv[1]) == "edit"){
+        edit();
+
+    }
+return 0;
+}
+void init(){
+
         std::ofstream myfile;
         myfile.open(CONFIG);
 
@@ -54,7 +69,13 @@ int main(int argc, char *argv[]) {
 
 
         myfile.close();
-    }
-    return 0;
 
+    return void();
+    }
+
+void edit(){
+
+    std::cout << "Something edited, blah blah blah" << std::endl;
+
+    return void();
 }
