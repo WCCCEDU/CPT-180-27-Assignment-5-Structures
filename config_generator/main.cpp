@@ -58,13 +58,13 @@ int main(int argc, char *argv[]) {
 
         } else {
 // invalid argument
-            cout << "Invalid argument us int or edit." << endl;
+            cout << "Invalid argument use int or edit." << endl;
             cout << "When using edit either enter a value to edit" << endl;
             cout << "(name, email, cypher, timezone, or knownrecipients)." << endl;
             cout << "If no setting is entered then the settings will be cycled through" << endl;
         }
     } else {
-        cout << "Invalid argument us int or edit." << endl;
+        cout << "Invalid argument use int or edit." << endl;
         cout << "When using edit either enter a value to edit" << endl;
         cout << "(name, email, cypher, timezone, or knownrecipients)." << endl;
         cout << "If no setting is entered then the settings will be cycled through" << endl;
