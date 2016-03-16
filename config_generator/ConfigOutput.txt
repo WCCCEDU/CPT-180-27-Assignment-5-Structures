@@ -1,0 +1,10 @@
+[name]
+	 Samantha
+[email]
+	shuries@my.wccc.edu
+[cypher]
+	cypher
+[timezone]
+	5:00
+[filepath]
+	C:\Users\Samantha\Documents\Schoolwork\Spring2016\C++\Assignment2\ConfigOutput.txt
