@@ -49,14 +49,115 @@ int main(int argc, char *argv[]) {
     }else if(static_cast<string>(argv[1]) == "edit"){
 
         config_lib::config read;
-        if(static_cast<string>(argv[2]) == "name"){
+        if(static_cast<string>(argv[2]) == "name") {
             ifstream inFile;
             inFile.open(read.file_path);
 
+            ofstream outFile;
+            outFile.open(read.file_path);
+
+            inFile >> read.name;
+            inFile >> read.email;
+            inFile >> read.cypher;
+            inFile >> read.timezone_offset;
+            inFile >> read.file_path;
+
+            cout << "Enter a new name: " << endl;
+            getline(cin, read.name);
+
+
+            outFile << read.name << endl;
+            outFile << read.email << endl;
+            outFile << read.cypher << endl;
+            outFile << read.timezone_offset << endl;
+            outFile << read.file_path << endl;
+
+            inFile.close();
+            inFile.close();
+
+        } else if(static_cast<string>(argv[2]) == "email"){
+                ifstream inFile;
+                inFile.open(read.file_path);
+
+                ofstream outFile;
+                outFile.open(read.file_path);
+
+            inFile >> read.name;
+            inFile >> read.email;
+            inFile >> read.cypher;
+            inFile >> read.timezone_offset;
+            inFile >> read.file_path;
 
 
 
-        }
+            cout << "Enter a new email: " << endl;
+                getline(cin, read.email);
+
+
+                outFile << read.name << endl;
+                outFile << read.email << endl;
+                outFile << read.cypher << endl;
+                outFile << read.timezone_offset << endl;
+                outFile << read.file_path << endl;
+
+                inFile.close();
+                inFile.close();
+
+        } else if(static_cast<string>(argv[2]) == "cypher"){
+            ifstream inFile;
+            inFile.open(read.file_path);
+
+            ofstream outFile;
+            outFile.open(read.file_path);
+
+            inFile >> read.name;
+            inFile >> read.email;
+            inFile >> read.cypher;
+            inFile >> read.timezone_offset;
+            inFile >> read.file_path;
+
+            cout << "Enter a new cypher: " << endl;
+            getline(cin, read.cypher);
+
+
+            outFile << read.name << endl;
+            outFile << read.email << endl;
+            outFile << read.cypher << endl;
+            outFile << read.timezone_offset << endl;
+            outFile << read.file_path << endl;
+
+            inFile.close();
+            inFile.close();
+
+        } else if(static_cast<string>(argv[2]) == "timezone"){
+            ifstream inFile;
+            inFile.open(read.file_path);
+
+            ofstream outFile;
+            outFile.open(read.file_path);
+
+            inFile >> read.name;
+            inFile >> read.email;
+            inFile >> read.cypher;
+            inFile >> read.timezone_offset;
+            inFile >> read.file_path;
+            
+            cout << "Enter a new timezone offset: " << endl;
+            getline(cin, read.timezone_offset);
+
+
+            outFile << read.name << endl;
+            outFile << read.email << endl;
+            outFile << read.cypher << endl;
+            outFile << read.timezone_offset << endl;
+            outFile << read.file_path << endl;
+
+            inFile.close();
+            inFile.close();
+
+
+
+
     }
 
     return 0;
