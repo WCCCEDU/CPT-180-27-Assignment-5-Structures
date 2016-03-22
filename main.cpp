@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
             inFile >> read.cypher;
             inFile >> read.timezone_offset;
             inFile >> read.file_path;
-            
+
             cout << "Enter a new timezone offset: " << endl;
             getline(cin, read.timezone_offset);
 
