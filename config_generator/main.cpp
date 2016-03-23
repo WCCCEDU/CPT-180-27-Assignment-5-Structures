@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-
+#include "config_generator.h"
 
 using std::cout;
 using std::endl;
@@ -9,17 +9,17 @@ using std::cin;
 using std::ofstream;
 using std::ifstream;
 
-//const string CONFIG_FILE_PATH = "config.txt";
+const string CONFIG_FILE_PATH = "config.txt";
 //const string NEW_CONFIG_FILE_PATH = "Editconfig.txt";
 
 void init() {
 
-    string Name;
+    string name;
     cout << "Enter name:" << endl;
-    cin >> Name;
-    while (Name == "") {
+    cin >> name;
+    while (name == "") {
         cout << "Re-Enter name" << endl;
-        cin >> Name;
+        cin >> name;
                 }
 
     string email;
@@ -62,7 +62,7 @@ void init() {
     user_config.knownRecipientsFile = knownRecipientsFile;
 
 }
-void mainconfiglib (char *argv[]) {
+int main (int argc, char *argv[]) {
     if (static_cast<string>(argv[1]) == "init") {
         init();
     }
@@ -83,14 +83,7 @@ void mainconfiglib (char *argv[]) {
         inputfile >> timeZoneDiff;
         inputfile >> knownRecipientsFile;
 
-        config edit_config;
-        edit_config.Name = Name;
-        edit_config.email = email;
-        edit_config.cypher = cypher;
-        edit_config.timeZoneDIff = timeZoneDiff;
-        edit_config.knownRecipientsFile;
 
-        inputfile.close();
 
         if (static_cast<string>(argv[2]) == "name") {
             cout << "Edit  name:" << endl;
@@ -136,11 +129,20 @@ void mainconfiglib (char *argv[]) {
             cin >> knownRecipientsFile;
 
             if (knownRecipientsFile == "") {
-                knowRecipientsFile = "knownrecipient.txt";
+                knownRecipientsFile = "knownrecipient.txt";
 
-            } else new_outputfile << "[knowrecipients] = " << knownRecipientsFile << endl;
+            } else knownRecipientsFile;
         }
+        config edit_config;
+        edit_config.name = Name;
+        edit_config.email = email;
+        edit_config.cypher = cypher;
+        edit_config.timeZoneDiff = timeZoneDiff;
+        edit_config.knownRecipientsFile = knownRecipientsFile;
+
+        inputfile.close();
     }
+    return 0;
 }
 
 

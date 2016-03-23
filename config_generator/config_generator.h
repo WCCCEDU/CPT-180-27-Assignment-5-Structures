@@ -1,12 +1,14 @@
 #include <iostream>
 #include <fstream>
 
-using std::string
+using std::string;
 
 struct config{
     string name;
     string email;
-    string timezone;
+    string timeZoneDiff;
     string cypher;
-    string knowrecipientsfile;
+    string knownRecipientsFile;
 };
+
+void init();

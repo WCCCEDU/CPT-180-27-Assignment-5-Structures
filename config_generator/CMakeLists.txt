@@ -3,5 +3,5 @@ project(config_generator)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp main.h config_generator.h)
+set(SOURCE_FILES main.cpp config_generator.h)
 add_executable(config_generator ${SOURCE_FILES})
