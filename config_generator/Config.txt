@@ -1,0 +1,10 @@
+[Name]
+	Sam Shurie
+[E-mail]
+	shuries@my.wccc.edu
+[Password]
+	pass
+[Timezone Offset]
+	-5:00
+[File Path]
+	C:\Users\Samantha\ClionProjects\Assignment2-Config-Files\Config.txt
