@@ -1,97 +1,193 @@
 #include "configheader.h"
 
-const string FILE_PATH = "C:\\Users\\Samantha\\ClionProjects\\Assignment2-Config-Files\\Config.txt";
+const string FILE_PATH = "C:\\Users\\Samantha\\Documents\\Schoolwork\\Spring2016\\C++\\Assignment5\\Config.txt";
 
 int main(int argc, char *argv[]) {
-  // initialize variables with given arguments
-  string arg1 = "";
-  if(argc > 1){
-    arg1 = static_cast<string>(argv[1]);
-  }
-  string arg2 = "";
-  if(argc == 3){
-    arg2 = static_cast<string>(argv[2]);
+
+  // initialize variables to hold given arguments.
+  // Initialized in case of user not entering arguments on start
+  string mode = "";
+  string field = "";
+
+  // retrieve argument 1 and cast as string, then test the given argument.
+  // if anything other than edit or init is entered,
+  // prompt until correct input is entered, then return acceptable input.
+  mode = cast_str(argv[1]);
+  mode = validateArg1(mode);
+
+  // only if the first agument is edit, cast the second argument and validate
+  if(mode == "edit"){
+    field = cast_str(argv[2]);
+    field = validateArg2(field);
   }
 
-  if(arg1 == "init"){
+  // after all validation is complete, run either init or edit function
+  if(mode == "init"){
     init();
-  }else if(arg1 == "edit"){
-    if(arg2 == "name" || arg2 == "email" || arg2 == "password" || arg2 == "timezone" || arg2 == "filepath") {
-        //edit(arg2);
-    }else{
-      do{
-        cout << "You did not enter the right argument. To edit a field, enter \"name\", \"email\", \"password\", "
-          << "\"timezone\", or \"filepath\": ";
-        cin >> arg2;
-      }while(arg2 != "name" && arg2 != "email" && arg2 != "password" && arg2 != "timezone" && arg2 != "filepath");
-      //edit(arg2);
-    }
-  }else{
-    do{
-      cout << "You did not provide valid arguments. Enter \"init\" to create a new config file or \"edit\""
-                << " to change an existing one: ";
-      cin >> arg1;
-    }while(arg1 != "init" && arg1 != "edit");
-    if(arg1 == "init"){
-      init();
-    }else{
-      cout << "Enter one of the following fields to edit its value: \"name\", \"email\", \"password\","
-                << " \"timezone\", \"filepath\"";
-      cin >> arg2;
-      while(arg2 != "name" && arg2 != "email" && arg2 != "password" && arg2 != "timezone" && arg2 != "filepath") {
-        cout << "You did not enter an acceptable argument. Please enter one of the following: \"name\", \"email\", "
-                << "\"password\", \"timezone\",\n\"filepath\": ";
-        cin >> arg2;
-      }
-      //edit(arg2);
-    }
+  }else if(mode == "edit"){
+    edit(field);
   }
+
   return 0;
 }
 
+/**
+ * cast_str function casts a character pointer to a string
+ */
+string cast_str(char *arg){
+  string str = static_cast<string>(arg);
+  return str;
+}
+
+/*
+ * validateArg1 function accepts a string and compares it to "init" and "edit."
+ * if true, the string is returned without doing anything. Else, keep
+ * prompting for input until an acceptable answer is given and then return
+ */
+string validateArg1(string arg) {
+  while ((arg != "init") && (arg != "edit")) {
+    cout << "To begin, please enter \"init\" or \"edit\":";
+    cin >> arg;
+  }
+  return arg;
+}
+
+/*
+ * Similar to validateArg1, accepts a string and compares it with the five field options of the
+ * ConfigFile Struct. If true, return with no action. Else, prompt for new input until user provides
+ * valid entry and then return.
+ */
+string validateArg2(string arg) {
+  bool found = false;
+  while(arg != "name" && arg != "email" && arg != "cypher" && arg != "timezone" && arg != "filepath"){
+    cout << "To edit, please enter one of the following fields; \"name\", \"email\", \"cypher\", \"timezone\","
+              " \"filepath\": ";
+    cin >> arg;
+  }
+  return arg;
+}
+
 void init() {
-  const int SIZE = 5;
-  const string PROMPTS[SIZE] = {"Please enter your first and last name: ", "Please enter your email address: ", "Please enter"
-    " your password: ", "Please enter a timezone offset: ", "Enter a file path for the config file: "};
 
   cout << "\nCONFIG FILE CREATION\n\n";
 
-  string values[SIZE];
-  // prompt for all questions that require input.
-  for(int i = 0; i < SIZE; i++) {
-    cout << "\t" + PROMPTS[i];
-    getline(cin, values[i]);
-    while(values[i].length() == 0) {
-      if(i == (SIZE - 1)){
-        values[i] = FILE_PATH;
-        cout << "\t( File path set to default location )";
-      }else{
-        cout << "You did not enter any input. Please try again.\n";
-        cout << PROMPTS[i];
-        cin >> values[i];
-      }
-    }
-  }
-
-  // create struct and assign user input to fields
+  // declare struct
   configio::ConfigFile config;
-  config.first_name = values[0];
-  config.email = values[1];
-  config.cypher = values[2];
-  config.timezone = values[3];
-  config.filepath = values[4];
 
+  // initialize struct fields by calling the get_value function and returning a string value
+  config.first_name = get_value(f_name);
+  config.email = get_value(email);
+  config.cypher = get_value(cypher);
+  config.timezone = get_value(timezone);
+  config.filepath = get_value(f_path);
+
+  //write config to file and print success status
   if(configio::write_config(config.filepath, config)){
-   cout << "File Created";
+   cout << "( File Created )" << endl;
   }else {
-    cout << "Error Creating File";
+    cout << "( Error Creating File )" << endl;
   }
 }
 
+/**
+ * get_value will return dtring values for ConfigFile fields
+ */
+string get_value(fields field){
+  bool isFPath = false;
+
+  // Determine whether current field is f_path (handled differently than other fields)
+  if(field == f_path){
+    isFPath = true;
+    cout << "\tEnter a value for the " << FIELDS[field] << " field "
+           "( Pressing \"Enter\" will set filepath to default location ):";
+  } else {
+    cout << "\tEnter a value for the " << FIELDS[field] << " field:";
+  }
+  string input = "";
+  getline(cin, input);
+
+  // if the user pressed Enter without entering input, determine whether current field
+  // is fpath. If isFPath, start path handling.
+  // Else, if not isFPath, prompt the user for a field value again
+  if (input == "") {
+    if (isFPath){
+        handlePath();
+    } else {
+      while(input == "") {
+        cout << "( Invalid Input )" << endl;
+        cout << "\tEnter a value for the " << FIELDS[field] << " field:";
+        getline(cin, input);
+      }
+    }
+  }
+  return input;
+}
+
+/* handlePath function prompts user a second time before overwriting default config file
+ * if user_confirm is true, filepath is set to default location
+ * if false, user enters new path and path is tested before being returned
+ */
+string handlePath() {
+  string path;
+
+  // if user confirms that they want to overwrite the default template file, return the constant path
+  if (user_confirm()) {
+    path = FILE_PATH;
+    cout << "( File path set to default location )"  << endl;
+
+  // else, if user has changed their mind, give a option to enter new file path.
+  // After new file path is given by user, test path and return if good.
+  } else {
+    cout << "\tEnter a new value for the " << FIELDS[f_path] << " field:";
+    getline(cin, path);
+    while(!ifGood(path)){
+      cout << "( Invalid input )" << endl;
+      cout << "\tEnter a new value for the " << FIELDS[f_path] << " field:";
+      getline(cin, path);
+    }
+    cout << "( New file path set )" << endl;
+  }
+
+  return path;
+}
+
+/* if user has chosen to overwrite the default file,
+ * prompt a second time before actually overwriting
+ */
+bool user_confirm(){
+  cout << "\tAre you sure you want to overwrite the default config file?" << endl;
+  cout << "( " << FILE_PATH << " )" << endl << "\tyes or no: ";
+  string input;
+  getline(cin, input);
+  while (input != "yes" && input != "no") {
+    cout << "( Invalid input )" << endl << "\tPlease enter \"yes\" or \"no\": ";
+    getline(cin, input);
+  }
+  bool isOverwriting = false;
+  if (input == "yes") {
+    isOverwriting = true;
+    cout << "( You selected to overwrite the default file )" << endl;
+  } else {
+    cout << "( You selected not to overwrite the default file )" << endl;
+  }
+  return isOverwriting;
+}
 
 /*
+ * ifGood accepts a file path string and determines whether the path is locatable
+ */
+bool ifGood(string filepath){
+  ifstream file(filepath);
+  bool status = false; // initialize to false and only switch to true if file can be opened
+  if(file){
+    status = true; // file can be opened
+  }
+  file.close();
+  return status;
+}
+
+
 void edit(string field){
-  const int SIZE = 5;
 
   cout << "\nCONFIG FILE EDIT\n\n";
   cout << "\tEnter a filepath, or press 'Enter' to open the default path: ";
@@ -102,8 +198,8 @@ void edit(string field){
   }
 
   //read_config function reads lines of a file, stores data in struct and returns struct pointer
-  configio::ConfigFile* configptr = configio::read_config(path);
-  configio::ConfigFile config = *configptr;
+  configio::ConfigFile *config_ptr = configio::read_config(path);
+  configio::ConfigFile config = *config_ptr;
 
   // prompt user to change given field
   cout << "\tEnter a new value for the " + field + " field: ";
@@ -134,4 +230,3 @@ void edit(string field){
     cout << "Error in creating file";
   }
 }
-*/
